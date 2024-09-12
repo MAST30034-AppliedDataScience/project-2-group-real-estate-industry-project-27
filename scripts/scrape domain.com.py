@@ -46,6 +46,7 @@ def get_suburb (property):
     return suburb, postcode
 
 def standardize_text(text):
+    '''Convert text to the same standard'''
     # Convert to lowercase
     text = text.lower()
     # Remove the plural 's' (if any) at the end of the word
@@ -53,7 +54,9 @@ def standardize_text(text):
     return text
 
 def get_features (property):
-    # Initialize variables for bedrooms and bathrooms
+    '''Find and return number of bedrooms, bathrooms, parking spaces 
+    of the property'''
+    # Initialize variables for bedrooms, bathrooms and parking spaces
     bedrooms = None
     bathrooms = None
     parkings = None
@@ -81,7 +84,50 @@ def get_features (property):
 
     return bedrooms, bathrooms, parkings
 
+def get_available_date(property_soup):
+    '''Find and return the day when the property is available to move in'''
+
+    retrieve_day = '12th September 2024'
+    summary = property_soup.find('ul', {'data-testid': 'listing-summary-strip'})
+
+    # Check if the property's summary is included in the page
+    if summary:
+        first_li = summary.find('li')
+        first_li_text = first_li.text.strip()
+
+        # Check if available day is included in summary
+        if 'Available from' not in first_li_text and 'Date Available:' not in first_li_text:
+            return retrieve_day
+        
+    else: return retrieve_day
+
+    # Get the available day
+    available_date = first_li.find('strong').text.strip()   
+    if available_date == 'Available Now':
+        available_date = retrieve_day  
+    else:
+        available_date = available_date.split(",")[1].strip()   # get rid of the day of the week
+                                                                # only get date, month and year
+    return available_date
+
+def get_additional_features(property_soup):
+    '''Find additional features of the property and
+    return a list of these features'''
+
+    # Initialize the feature list
+    additional_features = []
+
+    # Find the additional features on the page
+    property_add_features = property_soup.find_all('li', {'data-testid': 
+                                                          "listing-details__additional-features-listing"})
+    if property_add_features:   # check if website does include any additional features 
+        for feature in property_add_features:    
+            feature_text = feature.text.strip()
+            additional_features.append(feature_text)
+    return additional_features
+
 def get_next_url (soup):
+    '''Find and return the url of the next page'''
     page_link_tag = soup.find_all('a', {'data-testid': 'paginator-navigation-button'})
     for link_tag in page_link_tag:
         page_label_tag = link_tag.find('span', class_='css-16q9xmc')
