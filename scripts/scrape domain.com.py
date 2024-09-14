@@ -34,8 +34,14 @@ def get_price (property):
     else: 
         return None
     
-def get_suburb (property):
-    '''Find the suburb and postcode of the property'''
+def get_address (property):
+    '''Find and return the address, suburb and postcode of the property'''
+
+    # Get address line 1 
+    address_line1 = property.find('span', {'data-testid': 'address-line1'})
+    address_line1_text = address_line1.get_text().strip().replace(u'\xa0', ' ').rstrip(',')  
+    
+    # Get suburb and postcode
     address_line2 = property.find('span', {'data-testid': 'address-line2'})
     address_details = address_line2.find_all('span')
 
@@ -43,7 +49,7 @@ def get_suburb (property):
         suburb = address_details[0].text.strip()
         postcode = address_details[2].text.strip()
 
-    return suburb, postcode
+    return address_line1_text, suburb, postcode
 
 def standardize_text(text):
     '''Convert text to the same standard'''
@@ -125,6 +131,23 @@ def get_additional_features(property_soup):
             feature_text = feature.text.strip()
             additional_features.append(feature_text)
     return additional_features
+
+def get_location (property_soup):
+    '''Find and return the longitude and latitude of the property's location'''
+    property_map = property_soup.find('img', {'class': 'css-12i4cum'})
+
+    if property_map:
+        src_link = property_map['src']
+        center_match = re.search(r'center=(-?\d+\.\d+,-?\d+\.\d+)', src_link)
+    else:
+        return None
+    
+    if center_match:
+        center = center_match.group(1)
+        return center
+    else:
+        return None
+
 
 def get_next_url (soup):
     '''Find and return the url of the next page'''
