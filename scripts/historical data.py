@@ -73,6 +73,12 @@ def clean_merged_df(merged_df):
     # Convert postcode to integers
     merged_df['postcode'] = pd.to_numeric(merged_df['postcode'], errors='coerce').astype('Int64')
 
+    # For postcode 3000, suburb is Melbourne CBD
+    merged_df.loc[merged_df['postcode'] == 3000, 'suburb'] = 'melbourne cbd'
+
+    # For postcode 3004, suburb is Melbourne CBD-St Kilda rd
+    merged_df.loc[merged_df['postcode'] == 3004, 'suburb'] = 'melbourne cbd-st kilda rd'
+    
     # Remove duplicated postcodes
     df_filtered = remove_duplicated_postcodes(merged_df)
 
