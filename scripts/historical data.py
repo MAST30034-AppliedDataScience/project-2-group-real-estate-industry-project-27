@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 def remove_redundant(df):
     '''Remove redundant rows/columns in the given historical 
@@ -64,30 +65,37 @@ def remove_duplicated_postcodes(merged_df):
     return df_filtered
 
 def clean_merged_df(merged_df):
-    '''Clean the merged dataframe by removing duplicate and
-    reorder columns, return the cleaned dataframe'''
+    '''Clean the merged dataframe by reordering columns and
+    return the cleaned dataframe'''
 
     # Reorder to make 'postcode' the first column in the merged df
     merged_df = merged_df[['postcode'] + [col for col in merged_df.columns if col != 'postcode']]
-    
-    # Convert postcode to integers
-    merged_df['postcode'] = pd.to_numeric(merged_df['postcode'], errors='coerce').astype('Int64')
 
     # For postcode 3000, suburb is Melbourne CBD
     merged_df.loc[merged_df['postcode'] == 3000, 'suburb'] = 'melbourne cbd'
 
     # For postcode 3004, suburb is Melbourne CBD-St Kilda rd
     merged_df.loc[merged_df['postcode'] == 3004, 'suburb'] = 'melbourne cbd-st kilda rd'
-    
-    # Remove duplicated postcodes
-    df_filtered = remove_duplicated_postcodes(merged_df)
 
-    nan_postcode_mask = df_filtered['postcode'].isna()
-    duplicates_mask = df_filtered.duplicated(subset=df_filtered.columns.difference(['suburb', 'postcode']), 
-                                           keep=False)
-    df_cleaned = df_filtered[~(nan_postcode_mask & duplicates_mask)]
+    return merged_df
 
-    return df_cleaned
+def save_dataframes(dataframe_list, folder_path, sheet_names):
+
+    # Indicate the name to be saved as
+    for i in range(len(sheet_names)):
+        sheet_names[i] = 'cleaned ' + sheet_names[i]
+
+    # Loop through each dataframe and save it as a CSV file
+    for i in range(len(dataframe_list)):
+        csv_file = f"{sheet_names[i]}.csv"  # Name the CSV file based on the sheet name
+        file_path = os.path.join(folder_path, csv_file)
+        
+        # Create the folder if it is not existed
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+
+        dataframe_list[i].reset_index().to_csv(file_path, index=False) 
+        print(f"Saved {csv_file} under {folder_path}")
 
 
     
