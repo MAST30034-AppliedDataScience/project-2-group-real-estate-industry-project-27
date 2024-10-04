@@ -35,8 +35,9 @@ def predict_growth(rental_prices, predictions):
     last_known_price = rental_prices.iloc[-1]
     predicted_final_price = predictions.iloc[-1]
     predicted_growth_rate = (predicted_final_price - last_known_price) / last_known_price
+    growth_rate_per_year = predicted_growth_rate/3
 
-    return predicted_growth_rate
+    return growth_rate_per_year
 
 
 def predict_for_df(df, target, predict_df, predict_dates):
