@@ -28,22 +28,9 @@ def read_make_list(folder_path, file_names):
           dataframe_list.append(df)  
     return dataframe_list
 
-def predict_growth(rental_prices, predictions):
-    '''Calculate predicted growth rate using the the given historical data
-    and the predictions, return the growth rate'''
-    # Calculate the last known price and the predicted price at the end of 3 years
-    last_known_price = rental_prices.iloc[-1]
-    predicted_final_price = predictions.iloc[-1]
-    predicted_growth_rate = (predicted_final_price - last_known_price) / last_known_price
-
-    return predicted_growth_rate
-
-
-def predict_for_df(df, target, predict_df, predict_dates):
+def predict_for_df(df, predict_df, predict_dates):
     '''Predict the future rental prices for the indicated predict dates 
     and dataframe, store predictions in predict df and return predict df'''
-    if target == 'suburb':
-        predicted_growth_rates = {}
 
     for suburb in df.index:
         # Extract the rental prices for the suburb
@@ -53,43 +40,25 @@ def predict_for_df(df, target, predict_df, predict_dates):
         model = auto_arima(rental_prices, seasonal=False, stepwise=True, suppress_warnings=True)
         
         # Make predictions
-        predictions = model.predict(n_periods=20)
-
-        if target == 'suburb':
-            growth_rate = predict_growth(rental_prices, predictions)
-            # Store the predicted growth rate for the suburb
-            predicted_growth_rates[suburb] = growth_rate
-                
+        predictions = model.predict(n_periods=15)
         predictions.index = predict_dates
 
         # Add the predictions of the suburb to the dataframe
         predict_df[suburb] = predictions
-
-    if target == 'suburb':
-        predicted_growth_rate_series = pd.Series(predicted_growth_rates)
-        return predict_df, predicted_growth_rate_series
     
     return predict_df
 
-def predict_rental_prices(dataframe_list, target, folder_path, predict_filename):
+def predict_rental_prices(dataframe_list, folder_path, predict_filename):
     '''Predict future rental prices for each type in the dataframe list,
     then save the predictions under the indicated filename and folder path'''
-    if target == 'suburb':
-        growth_rates = []
+
     # Loop through each property type
     for i in range(len(dataframe_list)):
         # Create a DataFrame to store the predictions
-        predict_dates = pd.date_range(start=dataframe_list[i].columns[-1], periods=20, freq='Q')                                                          
+        predict_dates = pd.date_range(start=dataframe_list[i].columns[-1], periods=15, freq='Q')                                                          
         predict_df = pd.DataFrame(index=predict_dates)
 
-        if target == 'suburb':
-            predict_df, predicted_growth_rates = predict_for_df(dataframe_list[i], target, 
-                                                                predict_df, predict_dates)
-            growth_rates.append(predicted_growth_rates)
-
-        elif target == 'postcode':
-            predict_df = predict_for_df(dataframe_list[i], target, 
-                                                                predict_df, predict_dates)
+        predict_df = predict_for_df(dataframe_list[i], predict_df, predict_dates)
         
         # Save the final result to a CSV file
         file_name = predict_filename[i]
@@ -100,7 +69,16 @@ def predict_rental_prices(dataframe_list, target, folder_path, predict_filename)
             os.makedirs(folder_path)
 
         predict_df.reset_index().to_csv(file_path, index=False) 
-           
-    if target == 'suburb':
-        return growth_rates
+
+def predict_growth(predict_df):
+    '''Calculate growth rate of each suburb using the predicted
+    rental price, return the series growth rate by suburb'''
+ 
+    first_price = predict_df.iloc[0]  # First row (initial predicted price)
+    last_price = predict_df.iloc[-1]  # Last row (final predicted price)
+
+    # Calculate the growth rate
+    growth = (last_price - first_price) / first_price   # growth after 3 years
+    growth_rate = growth/3  # annual growth
+    return growth_rate
         
