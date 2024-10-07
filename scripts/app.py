@@ -1,4 +1,5 @@
-from shiny.express import input, render, ui
+from shiny.express import input, ui
+from shiny import render
 from shinywidgets import render_widget  
 from ipyleaflet import GeoJSON, Map, Marker
 import pandas as pd
@@ -11,6 +12,8 @@ import folium
 
 # run download.py
 #import download
+
+ui.page_opts(fillable=True)
 
 median_postcode_pd = pd.read_csv("../data/raw/median_price_per_postcode.csv")
 historical_price_pd = pd.read_csv("../data/raw/cleaned all properties.csv")
@@ -58,7 +61,10 @@ def list_median(suburb, historical):
     historical_subset = historical_subset.rename(columns = {historical_subset.columns[0]:"y"})
     return historical_subset
 
+
+
 with ui.sidebar():
+    ui.input_dark_mode(id="darkmode", mode="light")
     hist_choices = list(median_postcode_pd.columns.values)
     suburb_choices = ["all"] + historical_price_pd["suburb"].tolist()
     ui.input_checkbox("hist_check", "Filter Histogram by Suburb?\n(Warning: may result in sparse graphs)", False)
@@ -68,29 +74,44 @@ with ui.sidebar():
     ui.input_numeric("postcode", "Input Postcode", 3000)
     ui.input_slider("price", "Price Range Highlight", min=0, max=1000, value=[200,500])
 
-@render.plot
-def hist():
-    if input.suburb() == "all" or not input.hist_check():
-        displt = sns.displot(median_postcode_pd, x = input.var(), bins = 20)
-    else:
-        df_median_subset = median_postcode_pd[median_postcode_pd["suburb"] == input.suburb().upper()]
-        displt = sns.displot(df_median_subset, x = input.var(), bins = 20)
-    displt.figure.suptitle("Median Rental Price: " + input.var())
+with ui.layout_column_wrap(width=1 / 2):
+    with ui.card():
+        @render.plot
+        def hist():
+            if input.darkmode() == "dark":
+                sns.set_theme(style="dark")
+                plt.style.use('dark_background')
+            if input.darkmode() == "light":
+                sns.set_theme(style="whitegrid")
+                plt.style.use('default')
+            if input.suburb() == "all" or not input.hist_check():
+                displt = sns.displot(median_postcode_pd, x = input.var(), bins = 20)
+            else:
+                df_median_subset = median_postcode_pd[median_postcode_pd["suburb"] == input.suburb().upper()]
+                displt = sns.displot(df_median_subset, x = input.var(), bins = 20)
+            displt.figure.suptitle("Median Rental Price: " + input.var())
 
-@render.plot
-def line():
-    if input.suburb() == "all":
-        lplot = sns.lineplot(data = df_melted, x = "Date", y = "Price", hue="Suburb")
-    else:
-        df_melted_subset = df_melted[df_melted["Suburb"] == input.suburb()]
-        lplot = sns.lineplot(data = df_melted_subset, x = "Date", y = "Price", hue="Suburb")
+    with ui.card():
+        @render.plot
+        def line():
+            if input.darkmode() == "dark":
+                sns.set_theme(style="dark")
+                plt.style.use('dark_background')
+            if input.darkmode() == "light":
+                sns.set_theme(style="whitegrid")
+                plt.style.use('default')
+            if input.suburb() == "all":
+                lplot = sns.lineplot(data = df_melted, x = "Date", y = "Price", hue="Suburb")
+            else:
+                df_melted_subset = df_melted[df_melted["Suburb"] == input.suburb()]
+                lplot = sns.lineplot(data = df_melted_subset, x = "Date", y = "Price", hue="Suburb")
 
-    lplot.set(xlabel = "time", ylabel = "median price")
-    lplot.figure.suptitle("Median Rental Price over Time (" + input.suburb() + ")")
-    lplot.get_legend().set_visible(False)
-
+            lplot.set(xlabel = "time", ylabel = "median price")
+            lplot.figure.suptitle("Median Rental Price over Time (" + input.suburb() + ")")
+            lplot.get_legend().set_visible(False)
     
 with ui.card():
+    ui.card_header("Map of Melbourne using chosen Map Display Type")
     @render_widget  
     def map():
         map_melb = Map(center=(-37.8082, 144.96332), zoom=12)
