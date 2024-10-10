@@ -41,7 +41,7 @@ with zipfile.ZipFile(out_dir, 'r') as zip_ref:
 
 
 print("Begin Past Rental Data")
-url_past_rental = "https://www.dffh.vic.gov.au/moving-annual-rents-suburb-march-quarter-2023-excel"
+url_past_rental = "https://www.dffh.vic.gov.au/moving-annual-rents-suburb-march-quarter-2024-excel"
 urlretrieve(url_past_rental, DATA_DIR + "past_rental/" + "moving_rent_suburb.xlsx")
 
 print("Begin Social Indicator Data")
