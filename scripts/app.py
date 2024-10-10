@@ -15,10 +15,10 @@ import folium
 
 ui.page_opts(fillable=True)
 
-median_postcode_pd = pd.read_csv("../data/raw/median_price_per_postcode.csv")
-historical_price_pd = pd.read_csv("../data/raw/cleaned all properties.csv")
+median_postcode_df = pd.read_csv("../data/raw/median_price_per_postcode.csv")
+historical_price_df = pd.read_csv("../data/raw/cleaned all properties.csv")
 
-df_melted = historical_price_pd.reset_index().melt(id_vars=['suburb'])
+df_melted = historical_price_df.reset_index().melt(id_vars=['suburb'])
 df_melted = df_melted[df_melted["variable"] != "index"]
 df_melted = df_melted.replace("Dec 2003.1", "Dec 2003")
 df_melted["variable"] = pd.to_datetime(df_melted["variable"])
@@ -35,18 +35,18 @@ def postcode_highlight(feature):
 
 def median_rental_colour(feature):
     postcode = feature["properties"]["mccid_int"]
-    df_median_price = median_postcode_pd[median_postcode_pd["postcode"] == int(postcode)]
+    df_median_price = median_postcode_df[median_postcode_df["postcode"] == int(postcode)]
     if df_median_price.empty:
         return {"color":"white", "fillColor":"black"}   
-    median_price_max = max(median_postcode_pd[input.var()])
-    median_price_min = min(median_postcode_pd[input.var()])
+    median_price_max = max(median_postcode_df[input.var()])
+    median_price_min = min(median_postcode_df[input.var()])
     price_col = (df_median_price[input.var()] - median_price_min) / (median_price_max - median_price_min)
     hex_col = colors.to_hex(cm.YlOrRd(float(max(price_col)))) 
     return {"color":"white", "fillColor":hex_col}
 
 def highlight_selected_by_price(feature):
     postcode = feature["properties"]["mccid_int"]
-    df_median_price = median_postcode_pd[median_postcode_pd["postcode"] == int(postcode)]
+    df_median_price = median_postcode_df[median_postcode_df["postcode"] == int(postcode)]
     if df_median_price.empty:
         return {"color":"white", "fillColor":"black"}
     price_min, price_max = input.price()
@@ -65,8 +65,8 @@ def list_median(suburb, historical):
 
 with ui.sidebar():
     ui.input_dark_mode(id="darkmode", mode="light")
-    hist_choices = list(median_postcode_pd.columns.values)
-    suburb_choices = ["all"] + historical_price_pd["suburb"].tolist()
+    hist_choices = list(median_postcode_df.columns.values)
+    suburb_choices = ["all"] + historical_price_df["suburb"].tolist()
     ui.input_checkbox("hist_check", "Filter Histogram by Suburb?\n(Warning: may result in sparse graphs)", False)
     ui.input_selectize("var", "Select Rental Type", choices = hist_choices[2:])
     ui.input_selectize("suburb", "Select Suburb", choices = suburb_choices)
@@ -85,9 +85,9 @@ with ui.layout_column_wrap(width=1 / 2):
                 sns.set_theme(style="whitegrid")
                 plt.style.use('default')
             if input.suburb() == "all" or not input.hist_check():
-                displt = sns.displot(median_postcode_pd, x = input.var(), bins = 20)
+                displt = sns.displot(median_postcode_df, x = input.var(), bins = 20)
             else:
-                df_median_subset = median_postcode_pd[median_postcode_pd["suburb"] == input.suburb().upper()]
+                df_median_subset = median_postcode_df[median_postcode_df["suburb"] == input.suburb().upper()]
                 displt = sns.displot(df_median_subset, x = input.var(), bins = 20)
             displt.figure.suptitle("Median Rental Price: " + input.var())
 
