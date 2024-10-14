@@ -11,27 +11,27 @@ while url:  # stop when there are no more pages to scrape
     print("Begin page", page_count)    
 
     # Fetch and parse HTML of the current page
-    soup = get_soup(url)    # function from scrape domain.com
+    soup = scrape_domain.get_soup(url)    # function from scrape domain.com
 
     # Get a list of all property listings on the page
     listings = soup.find_all('div', {'class': 'css-qrqvvg'})
 
     # Extract information of each property
     for property in listings:
-        price = get_price(property)
+        price = scrape_domain.get_price(property)
         if not price:   # exclude properties that do not have a rental price         
             continue     # usually are properties under application
 
-        address_line1, suburb, postcode = get_address(property)
-        bedrooms, bathrooms, parkings = get_features(property)
+        address_line1, suburb, postcode = scrape_domain.get_address(property)
+        bedrooms, bathrooms, parkings = scrape_domain.get_features(property)
         property_type = property.find('span', class_='css-693528').text.strip()     
 
         # Look into the property's page to find additional features
         link = property.find('a', href = True)
         property_url = link['href']
-        property_soup = get_soup(property_url)
+        property_soup = scrape_domain.get_soup(property_url)
 
-        additional_features = get_additional_features(property_soup)
+        additional_features = scrape_domain.get_additional_features(property_soup)
         
         # Store the extracted data in a dictionary
         property_data = {
@@ -49,7 +49,7 @@ while url:  # stop when there are no more pages to scrape
 
         # Append the dictionary to the list of properties
         properties.append(property_data)
-    url = get_next_url(soup)
+    url = scrape_domain.get_next_url(soup)
     page_count += 1
 
 # Convert list of dictionaries to a pandas DataFrame
