@@ -95,7 +95,5 @@ def save_dataframes(dataframe_list, folder_path, sheet_names):
             os.makedirs(folder_path)
 
         dataframe_list[i].reset_index().to_csv(file_path, index=False) 
-        print(f"Saved {csv_file} under {folder_path}")
-
 
     
