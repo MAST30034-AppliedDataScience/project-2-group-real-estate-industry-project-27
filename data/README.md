@@ -12,14 +12,11 @@ https://discover.data.vic.gov.au/dataset/metro-train-stations-with-accessibility
 
 ## Steps to Order Datasets:
 
-1. Visit the following links to access the respective datasets:
-   - **PTV Metro Tram Stops**: https://datashare.maps.vic.gov.au/search?md=0058eda4-7b1e-5681-9758-7adbda8481b1
+1. Visit the following link to access the respective datasets:
    - **PTV Metro Train Stations**: https://datashare.maps.vic.gov.au/search?md=b6722101-8db5-51f0-8a6f-d1e4fe805b73
-   - **PTV Metro Bus Stops**: https://datashare.maps.vic.gov.au/search?md=b3a2f89b-02c4-5541-aeb7-8c254363245b
 
-2. Add each dataset to the order by clicking **Add to Order**.
+2. Add the dataset to the order by clicking **Add to Order**.
 
-   **Note**: please place an order for each dataset separately to get individual URLs.
 
 3. Once added, **Proceed to Order Configuration**.
 
