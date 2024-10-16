@@ -28,4 +28,4 @@ for index, property_row in property_df.iterrows():
     property_df.at[index, 'min_train_dist'] = min_distance_station['distance']
     property_df.at[index, 'closest_train_station'] = min_distance_station['STOP_NAME']
 
-property_df.to_csv("../data/raw/property_w_distance.csv", index=False)
+property_df.to_csv("../data/curated/property_w_distance.csv", index=False)

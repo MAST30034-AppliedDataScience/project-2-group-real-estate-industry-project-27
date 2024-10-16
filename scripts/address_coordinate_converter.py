@@ -1,7 +1,7 @@
 import pandas as pd
 import openrouteservice
 
-property_df = pd.read_csv("../data/landing/properties.csv")
+property_df = pd.read_csv("../data/raw/preprocessed properties.csv")
 client = openrouteservice.Client(key='5b3ce3597851110001cf6248dc00320ff189425a87bb91f1d9b40af0')
 
 def to_coordinates(address):
