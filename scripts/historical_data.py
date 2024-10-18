@@ -81,13 +81,15 @@ def clean_merged_df(merged_df):
 
 def save_dataframes(dataframe_list, folder_path, sheet_names):
 
+    file_names = []
     # Indicate the name to be saved as
     for i in range(len(sheet_names)):
-        sheet_names[i] = 'cleaned ' + sheet_names[i]
+        new_name = 'cleaned ' + sheet_names[i]
+        file_names.append(new_name)
 
     # Loop through each dataframe and save it as a CSV file
     for i in range(len(dataframe_list)):
-        csv_file = f"{sheet_names[i]}.csv"  # Name the CSV file based on the sheet name
+        csv_file = f"{file_names[i]}.csv"  # Name the CSV file based on the sheet name
         file_path = os.path.join(folder_path, csv_file)
         
         # Create the folder if it is not existed
