@@ -1,14 +1,14 @@
 # Datasets
 
-# Primary Dataset Sources:
+## Primary Dataset Sources:
 - https://discover.data.vic.gov.au/dataset/social-indicators-for-city-of-melbourne-residents-2022
 - https://www.dffh.vic.gov.au/
 - https://datashare.maps.vic.gov.au/
 - https://www.domain.com.au/
 
-# Ordering PTV Datasets Instructions
+## Ordering PTV Datasets Instructions
 
-## Steps to Order Datasets:
+### Steps to Order Datasets:
 
 1. Visit the following link to access the respective datasets:
    - **PTV Metro Train Stations**: https://datashare.maps.vic.gov.au/search?md=b6722101-8db5-51f0-8a6f-d1e4fe805b73
@@ -31,9 +31,9 @@
 7. Once the order is confirmed, you will receive an email with the URL.  Replace expired URLs in `PTV_data_downloader.py` with the new URLs.
 
 
-# Requesting a Open Route Service API Key Instructions
+## Requesting a Open Route Service API Key Instructions
 
-## Steps to Requesting a Token:
+### Steps to Requesting a Token:
 
 1. Visit the following link:
    - https://openrouteservice.org/dev/#/login
@@ -42,11 +42,11 @@
 
 3. Then, click **Create Token**
 
-# Shapefiles and Geojson Data
+## Shapefiles and Geojson Data
 1. City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/shp
 2. City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/geojson
 
-# Rental Data
+## Rental Data
 1. Real Estate & Properties for Sale & Rent (2024) Domain.com.au
       -> https://www.domain.com.au/rent/melbourne-region-vic/?excludedeposittaken=1&page=1
 3. Department of Families, fairness and housing (2024) Department of Families Fairness and Housing Victoria | Department of Families, Fairness and Housing
