@@ -1,12 +1,10 @@
 # Datasets
-Please provide a high level `README.md` for your chosen datasets
 
-
-# Potential Datasets:
-https://discover.data.vic.gov.au/dataset/social-indicators-for-city-of-melbourne-residents-2022 (goal 3)
-https://discover.data.vic.gov.au/dataset/landmarks-and-places-of-interest-including-schools-theatres-health-services-sports-facilities-p (goal 1/3)
-https://discover.data.vic.gov.au/dataset/metro-train-stations-with-accessibility-information (goal 1/3)
-
+# Primary Dataset Sources:
+- https://discover.data.vic.gov.au/dataset/social-indicators-for-city-of-melbourne-residents-2022
+- https://www.dffh.vic.gov.au/
+- https://datashare.maps.vic.gov.au/
+- https://www.domain.com.au/
 
 # Ordering PTV Datasets Instructions
 
@@ -43,3 +41,13 @@ https://discover.data.vic.gov.au/dataset/metro-train-stations-with-accessibility
 2. Go to the 'Request a Token' section, select standard for **Token Type**, fill with any random name for **Token Name**
 
 3. Then, click **Create Token**
+
+# Shapefiles and Geojson Data
+1. City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/shp
+2. City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/geojson
+
+# Rental Data
+1. Real Estate & Properties for Sale & Rent (2024) Domain.com.au
+      -> https://www.domain.com.au/rent/melbourne-region-vic/?excludedeposittaken=1&page=1
+3. Department of Families, fairness and housing (2024) Department of Families Fairness and Housing Victoria | Department of Families, Fairness and Housing
+      -> https://www.dffh.vic.gov.au/
