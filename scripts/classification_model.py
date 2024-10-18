@@ -72,65 +72,6 @@ class_model = Pipeline([
 class_model.fit(X_train, y_class_train)
 y_class_pred = class_model.predict(X_test)
 
-# Visualization 1: Regression Model - Predicted vs Actual
-plt.figure(figsize=(10, 6))
-plt.scatter(y_reg_test, y_reg_pred, alpha=0.5)
-plt.plot([y_reg_test.min(), y_reg_test.max()], [y_reg_test.min(), y_reg_test.max()], 'r--', lw=2)
-plt.xlabel('Actual Price')
-plt.ylabel('Predicted Price')
-plt.title('Regression Model: Predicted vs Actual Prices')
-plt.tight_layout()
-plt.show()
-
-# Visualization 2: Regression Model - Residuals Plot
-residuals = y_reg_test - y_reg_pred
-plt.figure(figsize=(10, 6))
-plt.scatter(y_reg_pred, residuals, alpha=0.5)
-plt.hlines(y=0, xmin=y_reg_pred.min(), xmax=y_reg_pred.max(), colors='r', linestyles='--')
-plt.xlabel('Predicted Price')
-plt.ylabel('Residuals')
-plt.title('Regression Model: Residuals Plot')
-plt.tight_layout()
-plt.show()
-
-# Visualization 3: Classification Model - Confusion Matrix
-cm = confusion_matrix(y_class_test, y_class_pred)
-plt.figure(figsize=(10, 8))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.xlabel('Predicted')
-plt.ylabel('Actual')
-plt.title('Classification Model: Confusion Matrix')
-plt.tight_layout()
-plt.show()
-
-# Visualization 4: Classification Model - Feature Importance
-feature_importance = class_model.named_steps['classifier'].feature_importances_
-feature_names = (numeric_features +
-                 class_model.named_steps['preprocessor']
-                 .named_transformers_['cat']
-                 .get_feature_names_out(categorical_features).tolist())
-
-feature_importance_df = pd.DataFrame({'feature': feature_names, 'importance': feature_importance})
-feature_importance_df = feature_importance_df.sort_values('importance', ascending=False).head(10)
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x='importance', y='feature', data=feature_importance_df)
-plt.title('Classification Model: Top 10 Feature Importance')
-plt.tight_layout()
-plt.show()
-
-# Print model performance metrics
-print("Regression Model Performance:")
-print(f"Mean Squared Error: {mean_squared_error(y_reg_test, y_reg_pred):.2f}")
-print(f"R-squared Score: {r2_score(y_reg_test, y_reg_pred):.2f}")
-
-print("\nClassification Model Performance:")
-print(f"Accuracy: {class_model.score(X_test, y_class_test):.2f}")
-print("\nClassification Report:")
-print(classification_report(y_class_test, y_class_pred))
-
-
-
 # Initialize and train new models
 simple_reg_model = Pipeline([
     ('preprocessor', preprocessor),
@@ -190,36 +131,3 @@ classification_comparison = pd.DataFrame({
     'Precision (Weighted Avg)': [simple_class_report['weighted avg']['precision'], simple_class_report['weighted avg']['precision'], complex_class_report['weighted avg']['precision']],
     'Recall (Weighted Avg)': [simple_class_report['weighted avg']['recall'], simple_class_report['weighted avg']['recall'], complex_class_report['weighted avg']['recall']]
 })
-
-
-# Plotting the regression model comparison
-plt.figure(figsize=(10, 6))
-sns.barplot(x="Model", y="MSE", data=regression_comparison, hue="Model")
-plt.title("Regression Model Comparison (MSE)")
-plt.tight_layout()
-plt.show()
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x="Model", y="R-squared", data=regression_comparison, hue="Model")
-plt.title("Regression Model Comparison (R-squared)")
-plt.tight_layout()
-plt.show()
-
-# Plotting the classification model comparison
-plt.figure(figsize=(10, 6))
-sns.barplot(x="Model", y="Accuracy", data=classification_comparison, hue="Model")
-plt.title("Classification Model Comparison (Accuracy)")
-plt.tight_layout()
-plt.show()
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x="Model", y="Precision (Weighted Avg)", data=classification_comparison, hue="Model")
-plt.title("Classification Model Comparison (Precision - Weighted Avg)")
-plt.tight_layout()
-plt.show()
-
-plt.figure(figsize=(10, 6))
-sns.barplot(x="Model", y="Recall (Weighted Avg)", data=classification_comparison, hue="Model")
-plt.title("Classification Model Comparison (Recall - Weighted Avg)")
-plt.tight_layout()
-plt.show()
