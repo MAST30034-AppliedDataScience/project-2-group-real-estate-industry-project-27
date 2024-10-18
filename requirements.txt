@@ -1,0 +1,17 @@
+beautifulsoup4==4.12.3
+folium==0.17.0
+geojson==3.1.0
+geopandas==1.0.1
+ipyleaflet==0.19.2
+matplotlib==3.9.2
+numpy==2.1.2
+openrouteservice==2.3.3
+pandas==2.2.3
+pmdarima==2.0.4
+Requests==2.32.3
+scikit_learn==1.5.2
+seaborn==0.13.2
+shiny==1.1.0
+shinywidgets==0.3.3
+statsmodels==0.14.2
+tqdm==4.66.5

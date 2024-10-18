@@ -15,7 +15,7 @@ import folium
 
 ui.page_opts(fillable=True)
 
-median_postcode_df = pd.read_csv("../data/raw/median_price_per_postcode.csv")
+median_postcode_df = pd.read_csv("../data/raw/median price per postcode.csv")
 historical_price_df = pd.read_csv("../data/raw/cleaned all properties.csv")
 
 df_melted = historical_price_df.reset_index().melt(id_vars=['suburb'])

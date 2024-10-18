@@ -58,7 +58,7 @@ for target_dir in ["train"]:
     if not os.path.exists(DATA_DIR + ptv_dir + target_dir):
         os.makedirs(DATA_DIR + ptv_dir + target_dir)
 
-# This url might be expired, please refer to ../data/README for new url
+# This url might be expired, please refer to README for new url
 url_ptv_train = "https://s3.ap-southeast-2.amazonaws.com/cl-isd-prd-datashare-s3-delivery/Order_4T3RTZ.zip"
 
 output_train_dir = DATA_DIR + ptv_dir + "train/" + "ptv_train.zip"
