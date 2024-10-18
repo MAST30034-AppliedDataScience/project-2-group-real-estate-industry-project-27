@@ -41,7 +41,7 @@ with zipfile.ZipFile(out_dir, 'r') as zip_ref:
 
 
 print("Begin Past Rental Data")
-url_past_rental = "https://www.dffh.vic.gov.au/moving-annual-rents-suburb-march-quarter-2024-excel"
+url_past_rental = "https://www.dffh.vic.gov.au/moving-annual-rent-suburb-march-quarter-2024-excel"
 urlretrieve(url_past_rental, DATA_DIR + "past_rental/" + "moving_rent_suburb.xlsx")
 
 print("Begin Social Indicator Data")
@@ -62,7 +62,7 @@ for target_dir in ["train"]:
 url_ptv_train = "https://s3.ap-southeast-2.amazonaws.com/cl-isd-prd-datashare-s3-delivery/Order_4T3RTZ.zip"
 
 output_train_dir = DATA_DIR + ptv_dir + "train/" + "ptv_train.zip"
-urlretrieve(url_ptv_train, output_tram_dir)
+urlretrieve(url_ptv_train, output_train_dir)
 with zipfile.ZipFile(output_train_dir, 'r') as zip_ref:
     zip_ref.extractall(DATA_DIR + ptv_dir + "train/")
 
