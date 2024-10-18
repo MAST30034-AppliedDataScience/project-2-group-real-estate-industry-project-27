@@ -48,3 +48,4 @@ Tutorial Timeslot: Friday 11:00-13:00
 ## Dashboard App Instructions
 Ensure that the Shiny and Shinywidgets packages are installed first, then run the following in a command line:
 `shiny run --reload --launch-browser ../scripts/app.py`
+See the app specific readme in the scripts folder for more detailed instructions
