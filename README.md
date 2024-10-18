@@ -6,7 +6,7 @@ Tutorial Timeslot: Friday 11:00-13:00
 - Callum Sargeant 1277891
 - Quynh Phuong Le 1288599
 - Keyue Xie 1346572
-- Yuanda Zhu
+- Yuanda Zhu 1346491
 
 ## Project Resources
 ### Primary Data Sources:
