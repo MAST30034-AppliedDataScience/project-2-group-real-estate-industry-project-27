@@ -33,4 +33,13 @@ https://discover.data.vic.gov.au/dataset/metro-train-stations-with-accessibility
 7. Once the order is confirmed, you will receive an email with the URL.  Replace expired URLs in `PTV_data_downloader.py` with the new URLs.
 
 
+# Requesting a Open Route Service API Key Instructions
 
+## Steps to Requesting a Token:
+
+1. Visit the following link:
+   - https://openrouteservice.org/dev/#/login
+
+2. Go to the 'Request a Token' section, select standard for **Token Type**, fill with any random name for **Token Name**
+
+3. Then, click **Create Token**

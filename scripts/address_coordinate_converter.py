@@ -2,6 +2,8 @@ import pandas as pd
 import openrouteservice
 
 property_df = pd.read_csv("../data/raw/preprocessed properties.csv")
+
+# If the API key not working please check README file for a new key
 client = openrouteservice.Client(key='5b3ce3597851110001cf6248dc00320ff189425a87bb91f1d9b40af0')
 
 def to_coordinates(address):
