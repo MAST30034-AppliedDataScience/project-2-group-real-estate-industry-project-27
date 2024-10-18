@@ -5,7 +5,7 @@ Tutorial Timeslot: Friday 11:00-13:00
 ## Group Members:
 - Callum Sargeant
 - Quynh Phoung Le
-- Keyue Xie 
+- Keyue Xie 1346572
 - Yuanda Zhu
 
 ## Project Resources
@@ -18,7 +18,21 @@ Tutorial Timeslot: Friday 11:00-13:00
 - City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/shp
 - City of Melbourne Government Data Access API https://data.melbourne.vic.gov.au/api/v2/catalog/datasets/postcodes/exports/geojson
 ### PTV Data
-!!!Keyue to fill in!!!
+1. Visit the following link to access the respective datasets:
+   - **PTV Metro Train Stations**: https://datashare.maps.vic.gov.au/search?md=b6722101-8db5-51f0-8a6f-d1e4fe805b73
+2. Add the dataset to the order by clicking **Add to Order**.
+3. Once added, **Proceed to Order Configuration**.
+4. In the configuration, select the following options:
+   - **Projection**: Geographicals on GDA2020
+   - **Buffer**: No buffer
+   - **Format**: ESRI Shapefile
+   - **Area**: Select all available areas.
+5. After configuring, **Proceed to MyCart**.
+6. Then, **Proceed to Your Details** and enter the required information.
+### Open Route Service API
+1. Visit the following link:
+   - https://openrouteservice.org/dev/#/login
+2. Go to the 'Request a Token' section, select standard for **Token Type**, fill with any random name for **Token Name**
 ### Rental Data Scraping:
 - Real Estate & Properties for Sale & Rent (2024) Domain.com.au https://www.domain.com.au/rent/melbourne-region-vic/?excludedeposittaken=1&page=1
 
